@@ -1,4 +1,5 @@
-import { Button } from "./components/ui/button";
+import { ThemeProvider } from "./components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import {
   Route,
   RouterProvider,
@@ -18,7 +19,12 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <ThemeProvider>
+      <RouterProvider router={router}></RouterProvider>
+      <Toaster richColors />
+    </ThemeProvider>
+  );
 }
 
 export default App;
