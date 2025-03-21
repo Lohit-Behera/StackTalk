@@ -9,11 +9,15 @@ import {
 
 import Layout from "./Layout";
 import Homepage from "./page/Homepage";
+import AskQuestionPage from "./page/AskPage";
+import OneQuestionPage from "./page/OneQuestionsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Homepage />} />
+      <Route path="/ask" element={<AskQuestionPage />} />
+      <Route path="/question/:id" element={<OneQuestionPage />} />
     </Route>
   )
 );

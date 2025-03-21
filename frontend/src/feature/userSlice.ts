@@ -2,6 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { baseUrl } from "@/lib/proxy";
 
+interface User {
+  username: string;
+  questions: string[];
+  _id: string;
+}
+
 export const fetchCreateUser = createAsyncThunk(
   "user/fetchCreateUser",
   async (username: string, { rejectWithValue }) => {
@@ -9,7 +15,7 @@ export const fetchCreateUser = createAsyncThunk(
       const response = await axios.post(`${baseUrl}/api/user/create`, {
         username,
       });
-      localStorage.setItem("user", response.data.data);
+      localStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
@@ -22,10 +28,12 @@ export const fetchCreateUser = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState: {
-    createUser: { data: localStorage.getItem("user") || {} },
+    createUser: {
+      data: JSON.parse(localStorage.getItem("user") || "{}") || ({} as User),
+    },
     createUserStatus: "idle",
     createUserError: {},
   },
@@ -45,3 +53,5 @@ export const userSlice = createSlice({
       });
   },
 });
+
+export default userSlice.reducer;

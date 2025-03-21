@@ -9,9 +9,10 @@ export const createQuestion = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.post(`${baseUrl}/api/question/create`, {
-        question,
-      });
+      const response = await axios.post(
+        `${baseUrl}/api/question/create`,
+        question
+      );
       return response.data;
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
